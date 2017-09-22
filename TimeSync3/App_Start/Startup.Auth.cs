@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using TimeSync3.Models;
+using Timesheet.Data;
 
 namespace TimeSync3
 {

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Administration</title>
+    @Styles.Render("~/Content/css-admin")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="brand" style="padding-top: 10px; padding-bottom: 10px">
+                <a href='@Url.Action("Index", "Home", new { area = "" })'>
+                    <img src='@Url.Content("~/Content/Images/smart-logo-small.png")' />
+                </a>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-collapse collapse">
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </nav>
+        <div id="sidebar-nav" class="sidebar">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 95%;">
+                <div class="sidebar-scroll" style="overflow: hidden; width: auto; height: 95%;">
+                    <nav>
+
+                        <ul class="nav">
+                            <li><a href="Dashboard" class="active"><span>Dashboard</span></a></li>
+
+                            <li><a href="Customers" class=""><span>Customers</span></a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+       
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSync3", "TimeSync3\TimeSync3.csproj", "{EEAC8CFB-2A90-4690-AFA5-A83D9B3FE4EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheet.Data", "Timesheet.Data\Timesheet.Data.csproj", "{81E4BA0C-11ED-4DEC-9B53-E7AAD1792B0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EEAC8CFB-2A90-4690-AFA5-A83D9B3FE4EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEAC8CFB-2A90-4690-AFA5-A83D9B3FE4EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEAC8CFB-2A90-4690-AFA5-A83D9B3FE4EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E4BA0C-11ED-4DEC-9B53-E7AAD1792B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E4BA0C-11ED-4DEC-9B53-E7AAD1792B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E4BA0C-11ED-4DEC-9B53-E7AAD1792B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E4BA0C-11ED-4DEC-9B53-E7AAD1792B0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

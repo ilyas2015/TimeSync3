@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TimeSync3.Models;
+using Timesheet.Data;
 
 namespace TimeSync3.Controllers
 {

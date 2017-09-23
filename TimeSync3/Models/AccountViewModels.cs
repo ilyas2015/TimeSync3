@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Security;
 
 namespace TimeSync3.Models
 {
@@ -70,6 +71,10 @@ namespace TimeSync3.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -108,5 +113,25 @@ namespace TimeSync3.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class AccountDisplayViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
+
+        public ICollection<AccountRole> UserRoles { get; set; }
+    }
+
+    public class AccountRole
+    {
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
     }
 }

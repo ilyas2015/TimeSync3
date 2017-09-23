@@ -58,11 +58,32 @@
   <ItemGroup>
     <Compile Include="DataModels\ApplicationUser.cs" />
     <Compile Include="DataModels\ApplicationDbContext.cs" />
+    <Compile Include="DataModels\TsDocumentEntity.cs" />
+    <Compile Include="DataModels\TsEntry.cs" />
+    <Compile Include="DataModels\TsSetting.cs" />
+    <Compile Include="DataModels\TsTemplate.cs" />
+    <Compile Include="DataModels\TsWeekEntry.cs" />
+    <Compile Include="Migrations\201709230328139_Initial.cs" />
+    <Compile Include="Migrations\201709230328139_Initial.Designer.cs">
+      <DependentUpon>201709230328139_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709231355446_AddNewModels.cs" />
+    <Compile Include="Migrations\201709231355446_AddNewModels.Designer.cs">
+      <DependentUpon>201709231355446_AddNewModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709230328139_Initial.resx">
+      <DependentUpon>201709230328139_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709231355446_AddNewModels.resx">
+      <DependentUpon>201709231355446_AddNewModels.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

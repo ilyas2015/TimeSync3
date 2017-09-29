@@ -4,8 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Administration</title>
+    @Styles.Render("~/Content/ej/web/bootstrap-theme/ej.web.all.min.css")
     @Styles.Render("~/Content/css-admin")
+    @RenderSection("styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/ejscripts")
+    @RenderSection("scripts2", required: false)
+
 </head>
 <body>
     <div id="wrapper">
@@ -29,27 +38,29 @@
                         <ul class="nav">
                             <li><a href="Dashboard" class="active"><span>Dashboard</span></a></li>
 
-                            <li><a href="Customers" class=""><span>Customers</span></a></li>
+                            <li><a href="/Admin/Users" class=""><span>Users</span></a></li>
+                            <li><a href="/Admin/Roles" class=""><span>Roles</span></a></li>
 
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
-    </div>
-    
-       
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+        <div class="main">
+            <div class="main-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
         <footer>
+            <hr />
             <p>&copy; @DateTime.Now.Year - Timesheet Management</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    
     @RenderSection("scripts", required: false)
+    @Html.EJ().ScriptManager()
 </body>
 </html>

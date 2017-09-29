@@ -23,7 +23,7 @@ namespace Timesheet.Data.Migrations
                 var adminUserName = adminEmail;
                 var adminFullName = "System Administrator";
                 var adminPassword = adminEmail;
-                string adminRole = "Administrator";
+                string adminRole = "Admin";
                 CreateAdminUser(context, adminEmail, adminUserName, adminFullName, adminPassword, adminRole);
                 //CreateSeveralEvents(context);
             }

@@ -1,0 +1,78 @@
+﻿@model List<TimeSync3.Models.RoleViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>*@
+
+
+    @(Html.EJ().Grid<TimeSync3.Models.RoleViewModel>("Editing")
+                            .Datasource
+                            (ds =>
+                            {
+                                ds.Json((List<TimeSync3.Models.RoleViewModel>)ViewBag.dataSource)
+                                .UpdateURL("/Admin/Roles/RoleUpdate")
+                                .InsertURL("/Admin/Roles/RoleInsert")
+                                .RemoveURL("/Admin/Roles/RoleDelete")
+                                .Adaptor(AdaptorType.RemoteSaveAdaptor);
+                            })
+                            .EditSettings(
+                            edit =>
+                            {
+                                edit.AllowEditing()
+                                    .AllowDeleting()
+                                    .AllowAdding()
+                                    .ShowDeleteConfirmDialog(); })
+                            .ToolbarSettings(toolbar =>
+                            {
+                                toolbar.ShowToolbar().ToolbarItems(items =>
+                                {
+                                    items.AddTool(ToolBarItems.Add);
+                                    items.AddTool(ToolBarItems.Edit);
+                                    items.AddTool(ToolBarItems.Delete);
+                                    items.AddTool(ToolBarItems.Update);
+                                    items.AddTool(ToolBarItems.Cancel);
+                                });
+                            })
+                        .AllowPaging()
+                        .AllowSorting()
+                        .SortSettings( sortoption =>  sortoption.SortedColumns( col => col.Field("Name").Direction(SortOrder.Ascending).Add()))
+                        .Columns(col =>
+                        {
+                            col.Field("Id").HeaderText("ID").IsPrimaryKey(true).Width(50).AllowEditing(false).DefaultValue(Guid.NewGuid().ToString()).Add();
+                            col.Field("Name").HeaderText("Name").TextAlign(TextAlign.Left).Width(80).ValidationRules(v => v.AddRule("required", true)).Add();
+                        })
+                )
+
+    
+

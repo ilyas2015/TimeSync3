@@ -23,6 +23,11 @@ namespace TimeSync3
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ejscripts").Include(
+                      "~/Scripts/jsrender.min.js",
+                      "~/Scripts/ej/web/ej.web.all.min.js",
+                      "~/Scripts/ej/common/ej.unobtrusive.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-spacelab.css",
                       "~/Content/site.css"));

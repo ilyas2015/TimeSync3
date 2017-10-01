@@ -31,6 +31,10 @@ namespace TimeSync3
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-spacelab.css",
                       "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css-marvel").Include(
+                      "~/Content/marvel/bootstrap-marvel.css",
+                      "~/Content/marvel/bootstrap-marvel-font-awesome.css",
+                      "~/Content/marvel/bootstrap-marvel-custom-styles.css"));
             bundles.Add(new StyleBundle("~/Content/css-admin").Include(
                       "~/Content/bootstrap-admin.css",
                       "~/Content/site-admin.css"));

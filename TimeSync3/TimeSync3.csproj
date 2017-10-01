@@ -244,6 +244,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-admin.css" />
+    <Content Include="Content\bootstrap-coreui-admin.min.css" />
+    <Content Include="Content\bootstrap-font-awesome.min.css" />
+    <Content Include="Content\bootstrap-simple-line-icons.css" />
     <Content Include="Content\bootstrap-spacelab.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -541,6 +544,10 @@
     <Content Include="Content\ej\web\responsive-css\ejgrid.responsive.css" />
     <Content Include="Content\ej\web\ribbon-css\ej.icons.css" />
     <Content Include="Content\Images\smart-logo.png" />
+    <Content Include="Content\marvel\bootstrap-marvel-custom-styles.css" />
+    <Content Include="Content\marvel\bootstrap-marvel-font-awesome.css" />
+    <Content Include="Content\marvel\bootstrap-marvel.css" />
+    <Content Include="Content\marvel\font-awesome\fonts\fontawesome-webfontba72.svg" />
     <Content Include="Content\site-admin.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -649,6 +656,10 @@
     <Content Include="Content\ej\web\office-365\icons\ejicons.eot" />
     <Content Include="Content\ej\web\office-365\icons\ejicons.ttf" />
     <Content Include="Content\ej\web\office-365\icons\ejicons.woff" />
+    <Content Include="Content\marvel\font-awesome\fonts\fontawesome-webfontba72.eot" />
+    <Content Include="Content\marvel\font-awesome\fonts\fontawesome-webfontba72.ttf" />
+    <Content Include="Content\marvel\font-awesome\fonts\fontawesome-webfontba72.woff" />
+    <Content Include="Content\marvel\font-awesome\fonts\fontawesome-webfontd41d.eot" />
     <None Include="Scripts\ej\ej.widgets.all.intellisense.js" />
     <None Include="Scripts\ej\ej.widgets.all-vsdoc.js" />
     <Content Include="Scripts\ej\ej.globalize.min.js" />
@@ -1620,6 +1631,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialMarvel.cshtml" />
+    <Content Include="Views\Shared\_Layout - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

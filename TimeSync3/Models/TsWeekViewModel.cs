@@ -42,32 +42,32 @@ namespace TimeSync3.Models
 
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day1 { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
-        public TimeSpan Day1Hours { get; set; }
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
+        public decimal Day1Hours { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day2 { get; set; }
-        public TimeSpan Day2Hours { get; set; }
+        public decimal Day2Hours { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day3 { get; set; }
-        public TimeSpan Day3Hours { get; set; }
+        public decimal Day3Hours { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day4 { get; set; }
-        public TimeSpan Day4Hours { get; set; }
+        public decimal Day4Hours { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day5 { get; set; }
-        public TimeSpan Day5Hours { get; set; }
+        public decimal Day5Hours { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day6 { get; set; }
-        public TimeSpan Day6Hours { get; set; }
+        public decimal Day6Hours { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day7 { get; set; }
-        public TimeSpan Day7Hours { get; set; }
+        public decimal Day7Hours { get; set; }
 
         public DateTime? Day1StartTime { get; set; }
         public DateTime? Day1EndTime { get; set; }

@@ -9,7 +9,8 @@ namespace TimeSync3
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                         "~/Scripts/bootbox.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -26,7 +27,8 @@ namespace TimeSync3
             bundles.Add(new ScriptBundle("~/bundles/ejscripts").Include(
                       "~/Scripts/jsrender.min.js",
                       "~/Scripts/ej/web/ej.web.all.min.js",
-                      "~/Scripts/ej/common/ej.unobtrusive.min.js"));
+                      "~/Scripts/ej/i18n/ej.culture.en-US.min.js",
+                      "~/Scripts/ej/ej.unobtrusive.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-spacelab.css",

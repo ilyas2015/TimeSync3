@@ -18,6 +18,7 @@ using Timesheet.Data;
 using Spire.Doc;
 using Spire.Doc.Collections;
 using Spire.Doc.Documents;
+using Syncfusion.JavaScript.Models;
 //using Spire.Doc.Collections;
 
 namespace TimeSync3.Controllers
@@ -47,6 +48,12 @@ namespace TimeSync3.Controllers
         // GET: Timesheet/Create
         public ActionResult Create()
         {
+            Dictionary<string, object> AttrVal = new Dictionary<string, object>
+            {
+                {"class" , "form-control"}
+            };
+            ViewData["HtmlAttrData"] = AttrVal;
+
             var entry = new TsEntryViewModel();
             string userId = User.Identity.GetUserId();
             var templates = db.TsWeekTemplates.Where(t => t.ApplicationUserId == userId).
@@ -60,7 +67,7 @@ namespace TimeSync3.Controllers
             entry.WeekTemplatesList = templates;
             var defaultTempl = templates.Where(i => i.IsDefault).FirstOrDefault();
             if (defaultTempl != null) entry.TsWeekTemplateId = defaultTempl.TsWeekTemplateId;
-
+           
             return View(entry);
         }
 
@@ -79,7 +86,7 @@ namespace TimeSync3.Controllers
             TsEntry dbEntry = new TsEntry();
             dbEntry.StartDate = (DateTime)model.StartDate;
             dbEntry.EndDate = (DateTime)model.EndDate;
-            dbEntry.TotalHours = model.TotalHours;
+            //dbEntry.TotalHours = model.TotalHours;
             dbEntry.Name = $"{((DateTime)model.StartDate).ToString("yyyy-MM-dd")} - {((DateTime)model.EndDate).ToString("yyyy-MM-dd")}";
             dbEntry.UserId = userID;
             db.TsEntries.Add(dbEntry);
@@ -302,8 +309,8 @@ namespace TimeSync3.Controllers
             dbWeekEntry.Day7StartTime = model.Day7StartTime;
             dbWeekEntry.Day7EndTime = model.Day7EndTime;
 
-            TimeSpan totalTime = model.Day1Hours + model.Day2Hours + model.Day3Hours + model.Day4Hours + model.Day5Hours + model.Day6Hours + model.Day7Hours;
-            dbWeekEntry.TotalHours = (decimal)totalTime.TotalHours;
+            decimal totalTime = model.Day1Hours + model.Day2Hours + model.Day3Hours + model.Day4Hours + model.Day5Hours + model.Day6Hours + model.Day7Hours;
+            dbWeekEntry.TotalHours = totalTime;
             db.SaveChanges();
             UpdateTimesheetTotalHours(dbWeekEntry.TsEntryId);
             return "success";
@@ -439,35 +446,35 @@ namespace TimeSync3.Controllers
                     switch (((DateTime)week.Day1).DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
-                            week.Day1Hours = TimeSpan.FromHours(template.FillDay1 ? (double)template.HoursInDay : 0);
+                            week.Day1Hours = template.FillDay1 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Monday:
-                            week.Day1Hours = TimeSpan.FromHours(template.FillDay2 ? (double)template.HoursInDay : 0);
+                            week.Day1Hours = template.FillDay2 ? template.HoursInDay : 0;
                             totalHours += template.FillDay2 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Tuesday:
-                            week.Day1Hours = TimeSpan.FromHours(template.FillDay3 ? (double)template.HoursInDay : 0);
+                            week.Day1Hours = template.FillDay3 ? template.HoursInDay : 0;
                             totalHours += template.FillDay3 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Wednesday:
-                            week.Day1Hours = TimeSpan.FromHours(template.FillDay4 ? (double)template.HoursInDay : 0);
+                            week.Day1Hours = template.FillDay4 ? template.HoursInDay : 0;
                             totalHours += template.FillDay4 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Thursday:
-                            week.Day1Hours = TimeSpan.FromHours(template.FillDay5 ? (double)template.HoursInDay : 0);
+                            week.Day1Hours = template.FillDay5 ? template.HoursInDay : 0;
                             totalHours += template.FillDay5 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Friday:
-                            week.Day1Hours = TimeSpan.FromHours(template.FillDay6 ? (double)template.HoursInDay : 0);
+                            week.Day1Hours = template.FillDay6 ? template.HoursInDay : 0;
                             totalHours += template.FillDay6 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Saturday:
-                            week.Day1Hours = TimeSpan.FromHours(template.FillDay7 ? (double)template.HoursInDay : 0);
+                            week.Day1Hours = template.FillDay7 ? template.HoursInDay : 0;
                             totalHours += template.FillDay7 ? (double)template.HoursInDay : 0;
                             break;
                     }
-                    if (week.Day1Hours.TotalMinutes > 0)
+                    if (week.Day1Hours > 0)
                     {
                         week.Day1StartTime = template.StartTime;
                         week.Day1EndTime = template.EndTime;
@@ -478,35 +485,35 @@ namespace TimeSync3.Controllers
                     switch (((DateTime)week.Day2).DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
-                            week.Day2Hours = TimeSpan.FromHours(template.FillDay1 ? (double)template.HoursInDay : 0);
+                            week.Day2Hours = template.FillDay1 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Monday:
-                            week.Day2Hours = TimeSpan.FromHours(template.FillDay2 ? (double)template.HoursInDay : 0);
+                            week.Day2Hours = template.FillDay2 ? template.HoursInDay : 0;
                             totalHours += template.FillDay2 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Tuesday:
-                            week.Day2Hours = TimeSpan.FromHours(template.FillDay3 ? (double)template.HoursInDay : 0);
+                            week.Day2Hours = template.FillDay3 ? template.HoursInDay : 0;
                             totalHours += template.FillDay3 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Wednesday:
-                            week.Day2Hours = TimeSpan.FromHours(template.FillDay4 ? (double)template.HoursInDay : 0);
+                            week.Day2Hours = template.FillDay4 ? template.HoursInDay : 0;
                             totalHours += template.FillDay4 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Thursday:
-                            week.Day2Hours = TimeSpan.FromHours(template.FillDay5 ? (double)template.HoursInDay : 0);
+                            week.Day2Hours = template.FillDay5 ? template.HoursInDay : 0;
                             totalHours += template.FillDay5 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Friday:
-                            week.Day2Hours = TimeSpan.FromHours(template.FillDay6 ? (double)template.HoursInDay : 0);
+                            week.Day2Hours = template.FillDay6 ? template.HoursInDay : 0;
                             totalHours += template.FillDay6 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Saturday:
-                            week.Day2Hours = TimeSpan.FromHours(template.FillDay7 ? (double)template.HoursInDay : 0);
+                            week.Day2Hours = template.FillDay7 ? template.HoursInDay : 0;
                             totalHours += template.FillDay7 ? (double)template.HoursInDay : 0;
                             break;
                     }
-                    if (week.Day2Hours.TotalMinutes > 0)
+                    if (week.Day2Hours > 0)
                     {
                         week.Day2StartTime = template.StartTime;
                         week.Day2EndTime = template.EndTime;
@@ -517,35 +524,35 @@ namespace TimeSync3.Controllers
                     switch (((DateTime)week.Day3).DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
-                            week.Day3Hours = TimeSpan.FromHours(template.FillDay1 ? (double)template.HoursInDay : 0);
+                            week.Day3Hours = template.FillDay1 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Monday:
-                            week.Day3Hours = TimeSpan.FromHours(template.FillDay2 ? (double)template.HoursInDay : 0);
+                            week.Day3Hours = template.FillDay2 ? template.HoursInDay : 0;
                             totalHours += template.FillDay2 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Tuesday:
-                            week.Day3Hours = TimeSpan.FromHours(template.FillDay3 ? (double)template.HoursInDay : 0);
+                            week.Day3Hours = template.FillDay3 ? template.HoursInDay : 0;
                             totalHours += template.FillDay3 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Wednesday:
-                            week.Day3Hours = TimeSpan.FromHours(template.FillDay4 ? (double)template.HoursInDay : 0);
+                            week.Day3Hours = template.FillDay4 ? template.HoursInDay : 0;
                             totalHours += template.FillDay4 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Thursday:
-                            week.Day3Hours = TimeSpan.FromHours(template.FillDay5 ? (double)template.HoursInDay : 0);
+                            week.Day3Hours = template.FillDay5 ? template.HoursInDay : 0;
                             totalHours += template.FillDay5 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Friday:
-                            week.Day3Hours = TimeSpan.FromHours(template.FillDay6 ? (double)template.HoursInDay : 0);
+                            week.Day3Hours = template.FillDay6 ? template.HoursInDay : 0;
                             totalHours += template.FillDay6 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Saturday:
-                            week.Day3Hours = TimeSpan.FromHours(template.FillDay7 ? (double)template.HoursInDay : 0);
+                            week.Day3Hours = template.FillDay7 ? template.HoursInDay : 0;
                             totalHours += template.FillDay7 ? (double)template.HoursInDay : 0;
                             break;
                     }
-                    if (week.Day3Hours.TotalMinutes > 0)
+                    if (week.Day3Hours > 0)
                     {
                         week.Day3StartTime = template.StartTime;
                         week.Day3EndTime = template.EndTime;
@@ -556,35 +563,35 @@ namespace TimeSync3.Controllers
                     switch (((DateTime)week.Day4).DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
-                            week.Day4Hours = TimeSpan.FromHours(template.FillDay1 ? (double)template.HoursInDay : 0);
+                            week.Day4Hours = template.FillDay1 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Monday:
-                            week.Day4Hours = TimeSpan.FromHours(template.FillDay2 ? (double)template.HoursInDay : 0);
+                            week.Day4Hours = template.FillDay2 ? template.HoursInDay : 0;
                             totalHours += template.FillDay2 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Tuesday:
-                            week.Day4Hours = TimeSpan.FromHours(template.FillDay3 ? (double)template.HoursInDay : 0);
+                            week.Day4Hours = template.FillDay3 ? template.HoursInDay : 0;
                             totalHours += template.FillDay3 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Wednesday:
-                            week.Day4Hours = TimeSpan.FromHours(template.FillDay4 ? (double)template.HoursInDay : 0);
+                            week.Day4Hours = template.FillDay4 ? template.HoursInDay : 0;
                             totalHours += template.FillDay4 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Thursday:
-                            week.Day4Hours = TimeSpan.FromHours(template.FillDay5 ? (double)template.HoursInDay : 0);
+                            week.Day4Hours = template.FillDay5 ? template.HoursInDay : 0;
                             totalHours += template.FillDay5 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Friday:
-                            week.Day4Hours = TimeSpan.FromHours(template.FillDay6 ? (double)template.HoursInDay : 0);
+                            week.Day4Hours = template.FillDay6 ? template.HoursInDay : 0;
                             totalHours += template.FillDay6 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Saturday:
-                            week.Day4Hours = TimeSpan.FromHours(template.FillDay7 ? (double)template.HoursInDay : 0);
+                            week.Day4Hours = template.FillDay7 ? template.HoursInDay : 0;
                             totalHours += template.FillDay7 ? (double)template.HoursInDay : 0;
                             break;
                     }
-                    if (week.Day4Hours.TotalMinutes > 0)
+                    if (week.Day4Hours > 0)
                     {
                         week.Day4StartTime = template.StartTime;
                         week.Day4EndTime = template.EndTime;
@@ -595,35 +602,35 @@ namespace TimeSync3.Controllers
                     switch (((DateTime)week.Day5).DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
-                            week.Day5Hours = TimeSpan.FromHours(template.FillDay1 ? (double)template.HoursInDay : 0);
+                            week.Day5Hours = template.FillDay1 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Monday:
-                            week.Day5Hours = TimeSpan.FromHours(template.FillDay2 ? (double)template.HoursInDay : 0);
+                            week.Day5Hours = template.FillDay2 ? template.HoursInDay : 0;
                             totalHours += template.FillDay2 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Tuesday:
-                            week.Day5Hours = TimeSpan.FromHours(template.FillDay3 ? (double)template.HoursInDay : 0);
+                            week.Day5Hours = template.FillDay3 ? template.HoursInDay : 0;
                             totalHours += template.FillDay3 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Wednesday:
-                            week.Day5Hours = TimeSpan.FromHours(template.FillDay4 ? (double)template.HoursInDay : 0);
+                            week.Day5Hours = template.FillDay4 ? template.HoursInDay : 0;
                             totalHours += template.FillDay4 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Thursday:
-                            week.Day5Hours = TimeSpan.FromHours(template.FillDay5 ? (double)template.HoursInDay : 0);
+                            week.Day5Hours = template.FillDay5 ? template.HoursInDay : 0;
                             totalHours += template.FillDay5 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Friday:
-                            week.Day5Hours = TimeSpan.FromHours(template.FillDay6 ? (double)template.HoursInDay : 0);
+                            week.Day5Hours = template.FillDay6 ? template.HoursInDay : 0;
                             totalHours += template.FillDay6 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Saturday:
-                            week.Day5Hours = TimeSpan.FromHours(template.FillDay7 ? (double)template.HoursInDay : 0);
+                            week.Day5Hours = template.FillDay7 ? template.HoursInDay : 0;
                             totalHours += template.FillDay7 ? (double)template.HoursInDay : 0;
                             break;
                     }
-                    if (week.Day5Hours.TotalMinutes > 0)
+                    if (week.Day5Hours > 0)
                     {
                         week.Day5StartTime = template.StartTime;
                         week.Day5EndTime = template.EndTime;
@@ -634,35 +641,35 @@ namespace TimeSync3.Controllers
                     switch (((DateTime)week.Day6).DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
-                            week.Day6Hours = TimeSpan.FromHours(template.FillDay1 ? (double)template.HoursInDay : 0);
+                            week.Day6Hours = template.FillDay1 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Monday:
-                            week.Day6Hours = TimeSpan.FromHours(template.FillDay2 ? (double)template.HoursInDay : 0);
+                            week.Day6Hours = template.FillDay2 ? template.HoursInDay : 0;
                             totalHours += template.FillDay2 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Tuesday:
-                            week.Day6Hours = TimeSpan.FromHours(template.FillDay3 ? (double)template.HoursInDay : 0);
+                            week.Day6Hours = template.FillDay3 ? template.HoursInDay : 0;
                             totalHours += template.FillDay3 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Wednesday:
-                            week.Day6Hours = TimeSpan.FromHours(template.FillDay4 ? (double)template.HoursInDay : 0);
+                            week.Day6Hours = template.FillDay4 ? template.HoursInDay : 0;
                             totalHours += template.FillDay4 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Thursday:
-                            week.Day6Hours = TimeSpan.FromHours(template.FillDay5 ? (double)template.HoursInDay : 0);
+                            week.Day6Hours = template.FillDay5 ? template.HoursInDay : 0;
                             totalHours += template.FillDay5 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Friday:
-                            week.Day6Hours = TimeSpan.FromHours(template.FillDay6 ? (double)template.HoursInDay : 0);
+                            week.Day6Hours = template.FillDay6 ? template.HoursInDay : 0;
                             totalHours += template.FillDay6 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Saturday:
-                            week.Day6Hours = TimeSpan.FromHours(template.FillDay7 ? (double)template.HoursInDay : 0);
+                            week.Day6Hours = template.FillDay7 ? template.HoursInDay : 0;
                             totalHours += template.FillDay7 ? (double)template.HoursInDay : 0;
                             break;
                     }
-                    if (week.Day6Hours.TotalMinutes > 0)
+                    if (week.Day6Hours > 0)
                     {
                         week.Day6StartTime = template.StartTime;
                         week.Day6EndTime = template.EndTime;
@@ -673,35 +680,35 @@ namespace TimeSync3.Controllers
                     switch (((DateTime)week.Day7).DayOfWeek)
                     {
                         case DayOfWeek.Sunday:
-                            week.Day7Hours = TimeSpan.FromHours(template.FillDay1 ? (double)template.HoursInDay : 0);
+                            week.Day7Hours = template.FillDay1 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Monday:
-                            week.Day7Hours = TimeSpan.FromHours(template.FillDay2 ? (double)template.HoursInDay : 0);
+                            week.Day7Hours = template.FillDay2 ? template.HoursInDay : 0;
                             totalHours += template.FillDay2 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Tuesday:
-                            week.Day7Hours = TimeSpan.FromHours(template.FillDay3 ? (double)template.HoursInDay : 0);
+                            week.Day7Hours = template.FillDay3 ? template.HoursInDay : 0;
                             totalHours += template.FillDay3 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Wednesday:
-                            week.Day7Hours = TimeSpan.FromHours(template.FillDay4 ? (double)template.HoursInDay : 0);
+                            week.Day7Hours = template.FillDay4 ? template.HoursInDay : 0;
                             totalHours += template.FillDay4 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Thursday:
-                            week.Day7Hours = TimeSpan.FromHours(template.FillDay5 ? (double)template.HoursInDay : 0);
+                            week.Day7Hours = template.FillDay5 ? template.HoursInDay : 0;
                             totalHours += template.FillDay5 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Friday:
-                            week.Day7Hours = TimeSpan.FromHours(template.FillDay6 ? (double)template.HoursInDay : 0);
+                            week.Day7Hours = template.FillDay6 ? template.HoursInDay : 0;
                             totalHours += template.FillDay6 ? (double)template.HoursInDay : 0;
                             break;
                         case DayOfWeek.Saturday:
-                            week.Day7Hours = TimeSpan.FromHours(template.FillDay7 ? (double)template.HoursInDay : 0);
+                            week.Day7Hours = template.FillDay7 ? template.HoursInDay : 0;
                             totalHours += template.FillDay1 ? (double)template.HoursInDay : 0;
                             break;
                     }
-                    if (week.Day7Hours.TotalMinutes > 0)
+                    if (week.Day7Hours > 0)
                     {
                         week.Day7StartTime = template.StartTime;
                         week.Day7EndTime = template.EndTime;
@@ -858,7 +865,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day1StartTime") != null && dbWeekEntry.Day1StartTime != null && dbWeekEntry.Day1Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day1StartTime") != null && dbWeekEntry.Day1StartTime != null && dbWeekEntry.Day1Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day1StartTime", true, true);
                         //bookmarkNavigator.DeleteBookmarkContent(true);
@@ -866,7 +873,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day1EndTime") != null && dbWeekEntry.Day1EndTime != null && dbWeekEntry.Day1Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day1EndTime") != null && dbWeekEntry.Day1EndTime != null && dbWeekEntry.Day1Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day1EndTime", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
@@ -874,19 +881,19 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day1Hours1") != null && dbWeekEntry.Day1Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day1Hours1") != null && dbWeekEntry.Day1Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day1Hours1", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day1Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day1Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day1Hours2") != null && dbWeekEntry.Day1Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day1Hours2") != null && dbWeekEntry.Day1Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day1Hours2", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day1Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day1Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
@@ -900,7 +907,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day2StartTime") != null && dbWeekEntry.Day2StartTime != null && dbWeekEntry.Day2Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day2StartTime") != null && dbWeekEntry.Day2StartTime != null && dbWeekEntry.Day2Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day2StartTime", true, true);
                         //bookmarkNavigator.DeleteBookmarkContent(true);
@@ -908,7 +915,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day2EndTime") != null && dbWeekEntry.Day2EndTime != null && dbWeekEntry.Day2Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day2EndTime") != null && dbWeekEntry.Day2EndTime != null && dbWeekEntry.Day2Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day2EndTime", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
@@ -916,19 +923,19 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day2Hours1") != null && dbWeekEntry.Day2Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day2Hours1") != null && dbWeekEntry.Day2Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day2Hours1", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day2Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day2Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day2Hours2") != null && dbWeekEntry.Day2Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day2Hours2") != null && dbWeekEntry.Day2Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day2Hours2", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day2Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day2Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
@@ -942,7 +949,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day3StartTime") != null && dbWeekEntry.Day3StartTime != null && dbWeekEntry.Day3Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day3StartTime") != null && dbWeekEntry.Day3StartTime != null && dbWeekEntry.Day3Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day3StartTime", true, true);
                         //bookmarkNavigator.DeleteBookmarkContent(true);
@@ -950,7 +957,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day3EndTime") != null && dbWeekEntry.Day3EndTime != null && dbWeekEntry.Day3Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day3EndTime") != null && dbWeekEntry.Day3EndTime != null && dbWeekEntry.Day3Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day3EndTime", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
@@ -958,19 +965,19 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day3Hours1") != null && dbWeekEntry.Day3Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day3Hours1") != null && dbWeekEntry.Day3Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day3Hours1", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day3Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day3Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day3Hours2") != null && dbWeekEntry.Day3Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day3Hours2") != null && dbWeekEntry.Day3Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day3Hours2", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day3Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day3Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
@@ -984,7 +991,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day4StartTime") != null && dbWeekEntry.Day4StartTime != null && dbWeekEntry.Day4Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day4StartTime") != null && dbWeekEntry.Day4StartTime != null && dbWeekEntry.Day4Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day4StartTime", true, true);
                         //bookmarkNavigator.DeleteBookmarkContent(true);
@@ -992,7 +999,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day4EndTime") != null && dbWeekEntry.Day4EndTime != null && dbWeekEntry.Day4Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day4EndTime") != null && dbWeekEntry.Day4EndTime != null && dbWeekEntry.Day4Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day4EndTime", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
@@ -1000,19 +1007,19 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day4Hours1") != null && dbWeekEntry.Day4Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day4Hours1") != null && dbWeekEntry.Day4Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day4Hours1", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day4Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day4Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day4Hours2") != null && dbWeekEntry.Day4Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day4Hours2") != null && dbWeekEntry.Day4Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day4Hours2", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day4Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day4Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
@@ -1026,7 +1033,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day5StartTime") != null && dbWeekEntry.Day5StartTime != null && dbWeekEntry.Day5Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day5StartTime") != null && dbWeekEntry.Day5StartTime != null && dbWeekEntry.Day5Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day5StartTime", true, true);
                         //bookmarkNavigator.DeleteBookmarkContent(true);
@@ -1034,7 +1041,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day5EndTime") != null && dbWeekEntry.Day5EndTime != null && dbWeekEntry.Day5Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day5EndTime") != null && dbWeekEntry.Day5EndTime != null && dbWeekEntry.Day5Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day5EndTime", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
@@ -1042,19 +1049,19 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day5Hours1") != null && dbWeekEntry.Day5Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day5Hours1") != null && dbWeekEntry.Day5Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day5Hours1", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day5Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day5Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day5Hours2") != null && dbWeekEntry.Day5Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day5Hours2") != null && dbWeekEntry.Day5Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day5Hours2", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day5Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day5Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
@@ -1068,7 +1075,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day6StartTime") != null && dbWeekEntry.Day6StartTime != null && dbWeekEntry.Day6Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day6StartTime") != null && dbWeekEntry.Day6StartTime != null && dbWeekEntry.Day6Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day6StartTime", true, true);
                         //bookmarkNavigator.DeleteBookmarkContent(true);
@@ -1076,7 +1083,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day6EndTime") != null && dbWeekEntry.Day6EndTime != null && dbWeekEntry.Day6Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day6EndTime") != null && dbWeekEntry.Day6EndTime != null && dbWeekEntry.Day6Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day6EndTime", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
@@ -1084,19 +1091,19 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day6Hours1") != null && dbWeekEntry.Day6Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day6Hours1") != null && dbWeekEntry.Day6Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day6Hours1", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day6Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day6Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day6Hours2") != null && dbWeekEntry.Day6Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day6Hours2") != null && dbWeekEntry.Day6Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day6Hours2", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day6Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day6Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
@@ -1110,7 +1117,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day7StartTime") != null && dbWeekEntry.Day7Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day7StartTime") != null && dbWeekEntry.Day7Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day7StartTime", true, true);
                         //bookmarkNavigator.DeleteBookmarkContent(true);
@@ -1118,7 +1125,7 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day7EndTime") != null && dbWeekEntry.Day7Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day7EndTime") != null && dbWeekEntry.Day7Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day7EndTime", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
@@ -1126,19 +1133,19 @@ namespace TimeSync3.Controllers
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day7Hours1") != null && dbWeekEntry.Day7Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day7Hours1") != null && dbWeekEntry.Day7Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day7Hours1", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day7Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day7Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 
-                    if (bookmarks.FindByName("Day7Hours2") != null && dbWeekEntry.Day7Hours.TotalHours > 0)
+                    if (bookmarks.FindByName("Day7Hours2") != null && dbWeekEntry.Day7Hours > 0)
                     {
                         bookmarkNavigator.MoveToBookmark("Day7Hours2", true, true);
                         bookmarkNavigator.DeleteBookmarkContent(true);
-                        content = string.Format("{0}", dbWeekEntry.Day7Hours.TotalHours.ToString("F1"));
+                        content = string.Format("{0}", dbWeekEntry.Day7Hours.ToString("F1"));
                         bookmarkNavigator.ReplaceBookmarkContent(content, true);
                     }
 

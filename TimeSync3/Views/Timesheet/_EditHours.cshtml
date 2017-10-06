@@ -1,0 +1,187 @@
+﻿@model TimeSync3.Models.TsWeekViewModel
+
+<div>
+    <form id="myEditHoursForm">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.TsWeekEntryId)
+
+        <table class="table">
+            <tr>
+                <th>
+                    Weekday
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Hours
+                </th>
+                <th>
+                    Start Time
+                </th>
+                <th>
+                    End Time
+                </th>
+            </tr>
+            @if (Model.Day1 != null)
+            {
+                <tr>
+                    <td>
+                        @(((DateTime)Model.Day1).DayOfWeek.ToString())
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } )
+                    </td>
+                    <td>
+                        @Html.EJ().NumericTextbox("Day1Hours").Value(@Model.Day1Hours).DecimalPlaces(2)
+                        @*@Html.EditorFor(model => model.Day1Hours, new { htmlAttributes = new { @class = "form-control",  } })*@
+                        @Html.ValidationMessageFor(model => model.Day1Hours, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day1StartTime)
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day1EndTime)
+                    </td>
+                </tr>
+            }
+            @if (Model.Day2 != null)
+            {
+                <tr>
+                    <td>
+                        @(((DateTime)Model.Day2).DayOfWeek.ToString())
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </td>
+                    <td>
+                        @Html.EJ().NumericTextbox("Day2Hours").Value(@Model.Day2Hours).DecimalPlaces(2)
+                        @*@Html.EditorFor(model => model.Day2Hours, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Day2Hours, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day2StartTime)
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day2EndTime)
+                    </td>
+                </tr>
+            }
+            @if (Model.Day3 != null)
+            {
+                <tr>
+                    <td>
+                        @(((DateTime)Model.Day3).DayOfWeek.ToString())
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day3, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Day3, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day3Hours, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Day3Hours, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day3StartTime)
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day3EndTime)
+                    </td>
+                </tr>
+            }
+            @if (Model.Day4 != null)
+            {
+                <tr>
+                    <td>
+                        @(((DateTime)Model.Day4).DayOfWeek.ToString())
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day4, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Day4, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day4Hours, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Day4Hours, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day4StartTime)
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day4EndTime)
+                    </td>
+                </tr>
+            }
+            @if (Model.Day5 != null)
+            {
+                <tr>
+                    <td>
+                        @(((DateTime)Model.Day5).DayOfWeek.ToString())
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day5, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Day5, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day5Hours, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Day5Hours, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day5StartTime)
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day5EndTime)
+                    </td>
+                </tr>
+            }
+            @if (Model.Day6 != null)
+            {
+                <tr>
+                    <td>
+                        @(((DateTime)Model.Day6).DayOfWeek.ToString())
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day6, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Day6, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day6Hours, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Day6Hours, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day6StartTime)
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day6EndTime)
+                    </td>
+                </tr>
+            }
+            @if (Model.Day7 != null)
+            {
+                <tr>
+                    <td>
+                        @(((DateTime)Model.Day7).DayOfWeek.ToString())
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day7, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Day7, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Day7Hours, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Day7Hours, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day7StartTime)
+                    </td>
+                    <td>
+                        @Html.EJ().TimePickerFor(model => Model.Day7EndTime)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <a href="#" id="btnSaveHours" class="btn btn-success btn-block">Save</a>
+    </form>
+</div>
+

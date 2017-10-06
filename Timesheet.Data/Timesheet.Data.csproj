@@ -71,6 +71,18 @@
     <Compile Include="Migrations\201709231355446_AddNewModels.Designer.cs">
       <DependentUpon>201709231355446_AddNewModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710020113560_ChangeDateTimeFields.cs" />
+    <Compile Include="Migrations\201710020113560_ChangeDateTimeFields.Designer.cs">
+      <DependentUpon>201710020113560_ChangeDateTimeFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710040238552_DeleteDaysHoursColumns.cs" />
+    <Compile Include="Migrations\201710040238552_DeleteDaysHoursColumns.Designer.cs">
+      <DependentUpon>201710040238552_DeleteDaysHoursColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710040240249_AddDaysHoursColumns.cs" />
+    <Compile Include="Migrations\201710040240249_AddDaysHoursColumns.Designer.cs">
+      <DependentUpon>201710040240249_AddDaysHoursColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +95,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709231355446_AddNewModels.resx">
       <DependentUpon>201709231355446_AddNewModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710020113560_ChangeDateTimeFields.resx">
+      <DependentUpon>201710020113560_ChangeDateTimeFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040238552_DeleteDaysHoursColumns.resx">
+      <DependentUpon>201710040238552_DeleteDaysHoursColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040240249_AddDaysHoursColumns.resx">
+      <DependentUpon>201710040240249_AddDaysHoursColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

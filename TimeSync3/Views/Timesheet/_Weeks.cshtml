@@ -1,0 +1,25 @@
+@model List<TimeSync3.Models.TsWeekViewModel>
+
+<div class="panel-group" id="accordion">
+    @{ int colpan = 1;}
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse@(colpan)">
+                        @item.Name : @item.TotalHours
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse@(colpan)" class="panel-collapse collapse @(colpan==1? "in":string.Empty)">
+                <div class="panel-body" id="dvDays@(item.TsWeekEntryId)">
+                    @Html.Partial("_Days", @item)
+                </div>
+            </div>
+        </div>
+        colpan++;
+    }
+
+</div>
+

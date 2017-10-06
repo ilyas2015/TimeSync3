@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -44,6 +45,9 @@ namespace TimeSync3.Controllers
         public ActionResult Create()
         {
             var template = new TsTemplateViewModel();
+            template.TsWeekTemplateId = 1;
+            //template.StartTime = DateTime.Today;
+            //template.EndTime = DateTime.Today;
             //var list = new List<ListItem>();
             //list.Add(new ListItem { Value = DayOfWeek.Sunday.ToString(), Text = Enum.GetName(typeof(DayOfWeek), DayOfWeek.Sunday)});
             //template.ddlFirstDayOfWeek = list;
@@ -52,7 +56,7 @@ namespace TimeSync3.Controllers
 
         [ValidateAntiForgeryToken]
         [System.Web.Mvc.HttpPost]
-        public ActionResult Create(TsTemplateViewModel template)
+        public ActionResult Create([Bind(Exclude = "TsWeekTemplateId")] TsTemplateViewModel template)
         {
             if (!ModelState.IsValid)
             {
@@ -71,8 +75,15 @@ namespace TimeSync3.Controllers
             dbTemplate.FillDay6 = template.FillDay6;
             dbTemplate.FillDay7 = template.FillDay7;
             dbTemplate.IsDefault = template.IsDefault;
-            dbTemplate.StartTime = template.StartTime;
-            dbTemplate.EndTime = template.EndTime;
+
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            string today = DateTime.Today.ToString("dd-MM-yyyy");
+            string sStartTime = today + " " + template.StartTime.Trim();
+            string sEndTime = today + " " + template.EndTime.Trim();
+            DateTime startTime = DateTime.ParseExact(sStartTime, "dd-MM-yyyy h:mm tt", provider);
+            DateTime endTime = DateTime.ParseExact(sEndTime, "dd-MM-yyyy h:mm tt", provider);
+            dbTemplate.StartTime = startTime;
+            dbTemplate.EndTime = endTime;
 
             db.TsWeekTemplates.Add(dbTemplate);
             db.SaveChanges();
@@ -91,7 +102,7 @@ namespace TimeSync3.Controllers
                 }
             }
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
@@ -112,8 +123,10 @@ namespace TimeSync3.Controllers
             viewTemplate.FillDay6 = template.FillDay6;
             viewTemplate.FillDay7 = template.FillDay7;
             viewTemplate.IsDefault = template.IsDefault;
-            viewTemplate.StartTime = template.StartTime;
-            viewTemplate.EndTime = template.EndTime;
+
+            if (template.StartTime != null) viewTemplate.StartTime = ((DateTime)template.StartTime).ToString("hh:mm tt");
+            if (template.EndTime != null) viewTemplate.EndTime = ((DateTime)template.EndTime).ToString("hh:mm tt");
+
             return View(viewTemplate);
         }
 
@@ -135,8 +148,16 @@ namespace TimeSync3.Controllers
             dbTemplate.FillDay7 = template.FillDay7;
             dbTemplate.ApplicationUserId = userId;
             dbTemplate.IsDefault = template.IsDefault;
-            dbTemplate.StartTime = template.StartTime;
-            dbTemplate.EndTime = template.EndTime;
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            string today = DateTime.Today.ToString("dd-MM-yyyy");
+            string sStartTime = today + " " + template.StartTime.Trim();
+            string sEndTime = today + " " + template.EndTime.Trim();
+            DateTime startTime = DateTime.ParseExact(sStartTime, "dd-MM-yyyy h:mm tt", provider);
+            DateTime endTime = DateTime.ParseExact(sEndTime, "dd-MM-yyyy h:mm tt", provider);
+            //DateTime startTime = DateTime.ParseExact(template.StartTime, "hh:mm tt", CultureInfo.InvariantCulture);
+            //DateTime endTime = DateTime.ParseExact(template.EndTime, "hh:mm tt", CultureInfo.InvariantCulture);
+            dbTemplate.StartTime = startTime;
+            dbTemplate.EndTime = endTime;
 
             db.SaveChanges();
 

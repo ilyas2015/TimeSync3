@@ -11,7 +11,7 @@ namespace TimeSync3.Models
     public class TsTemplateViewModel
     {
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Please select a template from the list")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please select a template from the list")]
         public int TsWeekTemplateId { get; set; }
         //public string ApplicationUserId { get; set; }
         //public ApplicationUser ApplicationUser { get; set; }
@@ -41,9 +41,8 @@ namespace TimeSync3.Models
         [Required]
         public bool IsDefault { get; set; }
         [Display(Name = "Start Time")]
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
         [Display(Name = "End Time")]
-        [Required]
-        public DateTime EndTime { get; set; }
+        public string EndTime { get; set; }
     }
 }
